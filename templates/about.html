@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}<title>About — James Olaitan</title>{% endblock %}
+{% block meta %}<meta name="description" content="About James Olaitan — how an infrastructure & systems engineer found the load-bearing layer.">{% endblock %}
+
+{% block content %}
+<section class="section about" aria-labelledby="about-heading">
+  <div class="container container--narrow">
+    <img class="about__avatar" src="{{ url_for('static', filename='img/avatar.jpg') }}"
+         alt="James Olaitan" width="96" height="96" data-reveal>
+    <h1 class="section__heading" id="about-heading" data-reveal>About</h1>
+
+    <div class="prose">
+      {% for para in about.paragraphs %}
+      <p data-reveal>{{ para | inline_code }}</p>
+      {% endfor %}
+      <p class="about__footer" data-reveal>{{ about.footer }}</p>
+    </div>
+  </div>
+</section>
+{% endblock %}

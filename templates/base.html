@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  {# Pre-paint bootstrap: mark JS active (gates scroll-reveal) and set the theme
+     before first paint to avoid a flash of the wrong theme. #}
+  <script>
+    document.documentElement.classList.add('js');
+    (function () {
+      try {
+        var stored = localStorage.getItem('theme');
+        var theme = stored
+          || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.dataset.theme = theme;
+      } catch (e) {
+        document.documentElement.dataset.theme = 'light';
+      }
+    })();
+  </script>
+
+  {% block title %}<title>James Olaitan — Infrastructure & systems engineer</title>{% endblock %}
+  {% block meta %}<meta name="description" content="James Olaitan — infrastructure & systems engineer. Linux internals, distributed systems, and reliability.">{% endblock %}
+
+  {# Open Graph / Twitter share metadata. #}
+  {% block og %}
+  <meta property="og:title" content="James Olaitan — Infrastructure & systems engineer">
+  <meta property="og:description" content="I work across Linux internals, distributed systems, and reliability.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:image" content="{{ url_for('static', filename='img/og-image.png', _external=True) }}">
+  <meta name="twitter:card" content="summary_large_image">
+  {% endblock %}
+
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/favicon.svg') }}">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Serif:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  {% block head_extra %}{% endblock %}
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <nav class="nav container" aria-label="Primary">
+      <a class="nav__brand" href="{{ url_for('index') }}">James Olaitan</a>
+
+      <ul class="nav__links" id="nav-menu">
+        <li><a class="nav__link" href="{{ url_for('index') }}#work">Work</a></li>
+        <li><a class="nav__link" href="{{ url_for('about') }}">About</a></li>
+        <li><a class="nav__link" href="{{ url_for('reading') }}">Reading</a></li>
+      </ul>
+
+      <div class="nav__actions">
+        <button class="theme-toggle" id="theme-toggle" type="button"
+                aria-label="Toggle dark mode" aria-pressed="false">
+          <svg class="icon icon-moon" viewBox="0 0 24 24" width="20" height="20" fill="none"
+               stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
+          </svg>
+          <svg class="icon icon-sun" viewBox="0 0 24 24" width="20" height="20" fill="none"
+               stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>
+          </svg>
+        </button>
+
+        <button class="nav__toggle" id="nav-toggle" type="button"
+                aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
+          <svg class="icon" viewBox="0 0 24 24" width="22" height="22" fill="none"
+               stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+            <path d="M3 6h18M3 12h18M3 18h18"></path>
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p class="site-footer__line">{{ profile.name }} · {{ current_year }}</p>
+      <nav class="site-footer__links" aria-label="Social">
+        <a href="{{ profile.github }}" target="_blank" rel="noopener">GitHub</a>
+        <span class="site-footer__sep" aria-hidden="true">·</span>
+        <a href="{{ profile.linkedin }}" target="_blank" rel="noopener">LinkedIn</a>
+        <span class="site-footer__sep" aria-hidden="true">·</span>
+        <a href="{{ url_for('static', filename=profile.resume) }}" target="_blank" rel="noopener">Résumé</a>
+        <span class="site-footer__sep" aria-hidden="true">·</span>
+        <a href="mailto:{{ profile.email }}">Email</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

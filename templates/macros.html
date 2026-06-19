@@ -1,0 +1,91 @@
+{# Reusable, parameterized components for the repeated rows/entries on each page. #}
+
+{% macro project_row(p) %}
+{# One large clickable row. The whole block is a single anchor — no nested links. #}
+<a class="project" href="{{ p.repo }}" target="_blank" rel="noopener" data-reveal>
+  <div class="project__body">
+    <h3 class="project__title">{{ p.name }}</h3>
+    <p class="project__blurb">{{ p.blurb }}</p>
+    <p class="project__meta">
+      {% for bit in [p.year, p.type, p.domain, p.lang] %}<span class="project__meta-item">{{ bit }}</span>{% endfor %}
+    </p>
+    <span class="project__source">source&nbsp;↗</span>
+  </div>
+  <div class="project__media">
+    <img class="project__img" src="{{ url_for('static', filename=p.image) }}"
+         alt="Diagram illustrating {{ p.name }}" width="640" height="400" loading="lazy">
+    <span class="project__overlay" aria-hidden="true">View&nbsp;↗</span>
+  </div>
+</a>
+{% endmacro %}
+
+
+{% macro experience_entry(e) %}
+<article class="exp" data-reveal>
+  <div class="exp__head">
+    <div class="exp__brand">
+      {% if e.logo %}
+      <img class="exp__logo" src="{{ url_for('static', filename=e.logo) }}"
+           alt="{{ e.company }}" height="30">
+      {% else %}
+      <span class="exp__brand-name">{{ e.company }}</span>
+      {% endif %}
+    </div>
+    <div class="exp__when">
+      {% if e.in_progress %}<span class="pill">In progress</span>{% endif %}
+      <span class="exp__dates">{{ e.dates }}</span>
+    </div>
+  </div>
+
+  <h3 class="exp__role">{{ e.role }}</h3>
+  <p class="exp__company">{{ e.company }}</p>
+  <p class="exp__impact">{{ e.impact }}</p>
+
+  <ul class="tags">
+    {% for tag in e.tags %}<li class="tag">{{ tag }}</li>{% endfor %}
+  </ul>
+
+  {% if e.artifact %}
+  <a class="artifact" href="{{ e.artifact.url }}" target="_blank" rel="noopener">
+    <svg class="artifact__icon" viewBox="0 0 24 24" width="16" height="16" fill="none"
+         stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"
+         aria-hidden="true">
+      <path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"></path>
+      <path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"></path>
+    </svg>
+    <span class="artifact__title">{{ e.artifact.title }}</span>
+    <span class="artifact__host">{{ e.artifact.host }}</span>
+  </a>
+  {% endif %}
+</article>
+{% endmacro %}
+
+
+{% macro reading_entry(item) %}
+<div class="reading" data-reveal>
+  <div class="reading__head">
+    <div class="reading__title-wrap">
+      <h3 class="reading__title">
+        {% if item.source %}
+        <a class="reading__link" href="{{ item.source }}" target="_blank" rel="noopener">{{ item.title }}</a>
+        {% else %}
+        {{ item.title }}
+        {% endif %}
+      </h3>
+      {% if item.author %}<span class="reading__author">{{ item.author }}</span>{% endif %}
+    </div>
+    {% if item.source %}
+    <a class="reading__source" href="{{ item.source }}" target="_blank" rel="noopener">source&nbsp;↗</a>
+    {% endif %}
+  </div>
+
+  {% if item.blurb %}<p class="reading__blurb">{{ item.blurb }}</p>{% endif %}
+
+  {% if item.thoughts %}
+  <details class="thoughts">
+    <summary class="thoughts__toggle">thoughts</summary>
+    <div class="thoughts__body"><p>{{ item.thoughts }}</p></div>
+  </details>
+  {% endif %}
+</div>
+{% endmacro %}

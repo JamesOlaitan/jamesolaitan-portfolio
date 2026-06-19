@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% from "macros.html" import reading_entry %}
+
+{% block title %}<title>Reading — James Olaitan</title>{% endblock %}
+{% block meta %}<meta name="description" content="A running list of what James Olaitan is reading and watching, with the occasional thought.">{% endblock %}
+
+{% block content %}
+<section class="section reading-page" aria-labelledby="reading-heading">
+  <div class="container container--narrow">
+    <h1 class="section__heading" id="reading-heading" data-reveal>Reading</h1>
+    <p class="reading-page__intro" data-reveal>A running list of what I'm reading and watching, with the occasional thought.</p>
+
+    {# `group['items']` (not `group.items`) — `.items` resolves to the dict method in Jinja. #}
+    {% for group in reading %}
+    <div class="reading-group" data-reveal>
+      <h2 class="reading-group__label">{{ group.category }}</h2>
+      <div class="reading-group__items">
+        {% for item in group['items'] %}{{ reading_entry(item) }}{% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

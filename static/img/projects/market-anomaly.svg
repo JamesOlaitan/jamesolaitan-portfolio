@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img"
+     aria-label="A time series of two correlated sector lines that track together, then break apart at a region highlighted in cobalt.">
+  <title>Market Anomaly Detection — a correlation breakdown detected</title>
+  <rect width="640" height="400" fill="#FAFAF9"/>
+
+  <!-- breakdown region band -->
+  <rect x="396" y="40" width="52" height="300" fill="#1E3AFF" fill-opacity="0.08"/>
+  <line x1="404" y1="40" x2="404" y2="340" stroke="#1E3AFF" stroke-width="1.5" stroke-dasharray="5 5"/>
+  <text x="456" y="62" font-family="'IBM Plex Mono', monospace" font-size="13" fill="#1E3AFF">correlation breakdown</text>
+
+  <!-- axes -->
+  <g stroke="#8A8A90" stroke-width="1">
+    <line x1="70" y1="40" x2="70" y2="340"/>
+    <line x1="70" y1="340" x2="600" y2="340"/>
+  </g>
+
+  <!-- sector B (muted) — tracks A, then breaks away downward -->
+  <polyline fill="none" stroke="#8A8A90" stroke-width="1.8" stroke-linejoin="round"
+            points="70,206 120,176 170,216 220,166 270,206 330,181 400,210 460,250 520,288 600,300"/>
+
+  <!-- sector A (ink) — continues rising after the break -->
+  <polyline fill="none" stroke="#0E0E10" stroke-width="2" stroke-linejoin="round"
+            points="70,200 120,170 170,210 220,160 270,200 330,175 400,205 460,150 520,138 600,118"/>
+
+  <!-- divergence point -->
+  <circle cx="400" cy="207" r="4" fill="#1E3AFF"/>
+
+  <!-- legend -->
+  <g font-family="'IBM Plex Mono', monospace" font-size="12">
+    <line x1="78" y1="372" x2="104" y2="372" stroke="#0E0E10" stroke-width="2"/>
+    <text x="110" y="376" fill="#0E0E10">sector A</text>
+    <line x1="190" y1="372" x2="216" y2="372" stroke="#8A8A90" stroke-width="1.8"/>
+    <text x="222" y="376" fill="#8A8A90">sector B</text>
+    <text x="600" y="376" fill="#8A8A90" text-anchor="end">time &#8594;</text>
+  </g>
+</svg>

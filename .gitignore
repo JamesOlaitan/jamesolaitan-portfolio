@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Local tooling / OS
+.DS_Store
+*.log
+.env
+
+# Editor
+.vscode/
+.idea/
