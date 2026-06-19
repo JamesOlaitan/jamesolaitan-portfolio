@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% from "macros.html" import project_row, experience_entry %}
+
+{% block content %}
+<section class="hero" aria-label="Introduction">
+  <div class="container hero__inner">
+    <h1 class="hero__headline" data-reveal>I'm <span class="name">{{ profile.name }}</span>, and {{ profile.hero_clause }}</h1>
+    <p class="hero__role" data-reveal>{{ profile.role }}.</p>
+    <p class="hero__supporting" data-reveal>{{ profile.supporting }}</p>
+    <p class="hero__meta" data-reveal>
+      <svg class="icon icon-pin" viewBox="0 0 24 24" width="15" height="15" fill="none"
+           stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"
+           aria-hidden="true">
+        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"></path>
+        <circle cx="12" cy="10" r="3"></circle>
+      </svg>
+      Based in the {{ profile.location }} · {{ profile.availability }}
+    </p>
+    <div class="hero__actions" data-reveal>
+      <a class="btn btn--solid" href="mailto:{{ profile.email }}">Email me</a>
+      <a class="btn btn--quiet" href="{{ url_for('static', filename=profile.resume) }}"
+         target="_blank" rel="noopener">View résumé</a>
+    </div>
+  </div>
+</section>
+
+<section id="work" class="section work" aria-labelledby="work-heading">
+  <div class="container">
+    <h2 class="section__heading" id="work-heading" data-reveal>Selected work</h2>
+    <div class="work__list">
+      {% for p in projects %}{{ project_row(p) }}{% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section experience" aria-labelledby="exp-heading">
+  <div class="container">
+    <h2 class="section__heading" id="exp-heading" data-reveal>Experience</h2>
+    <div class="experience__list">
+      {% for e in experience %}{{ experience_entry(e) }}{% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section contact" aria-label="Contact">
+  <div class="container container--narrow contact__inner">
+    <p class="contact__line" data-reveal>Want someone who lives in the infrastructure layer? Let's talk.</p>
+    <div class="contact__actions" data-reveal>
+      <a class="btn btn--solid" href="mailto:{{ profile.email }}">Email me</a>
+    </div>
+  </div>
+</section>
+{% endblock %}
