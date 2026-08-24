@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}<title>{{ writing.title }} — James Olaitan</title>{% endblock %}
+{% block meta %}<meta name="description" content="{{ writing.description }}">{% endblock %}
+
+{% block content %}
+<section class="section writing-page" aria-labelledby="writing-heading">
+  <div class="container container--narrow">
+    <p class="writing-page__kicker" data-reveal>{{ writing.kicker }}</p>
+    <h1 class="section__heading" id="writing-heading" data-reveal>{{ writing.title }}</h1>
+
+    <div class="prose">
+      {% for section in writing.sections %}
+      <h2 class="writing-page__section-heading" data-reveal>{{ section.heading }}</h2>
+      {% for block in section.blocks %}
+        {% if block.type == "p" %}
+        <p data-reveal>{{ block.text | richtext }}</p>
+        {% elif block.type == "definitions" %}
+        <ul class="writing-page__list" data-reveal>
+          {# `block['items']` (not `block.items`) — `.items` resolves to the dict method in Jinja. #}
+          {% for item in block['items'] %}
+          <li><strong>{{ item.term }}</strong>: {{ item.detail | richtext }}</li>
+          {% endfor %}
+        </ul>
+        {% elif block.type == "status" %}
+        <ul class="writing-page__list" data-reveal>
+          {% for item in block['items'] %}
+          <li><strong>{{ item.label }}</strong>: {{ item.detail | richtext }}</li>
+          {% endfor %}
+        </ul>
+        {% elif block.type == "links" %}
+        <ul class="writing-page__list" data-reveal>
+          {% for item in block['items'] %}
+          <li>
+            <a href="{{ item.url }}" target="_blank" rel="noopener">{{ item.title | richtext }}</a>
+            <span class="writing-page__link-status">{{ item.status }}</span>
+          </li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

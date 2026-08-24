@@ -61,3 +61,14 @@ def get_reading():
         may be ``None``).
     """
     return data.READING
+
+
+def get_writing():
+    """Return the GSoC final-report page content.
+
+    Returns:
+        dict: ``title``, ``kicker``, ``description``, and ``sections`` (list of dicts,
+        each with a ``heading`` and a ``blocks`` list). Each block has a ``type`` of
+        ``p``, ``definitions``, ``status``, or ``links``, with fields matching that type.
+    """
+    return data.WRITING
